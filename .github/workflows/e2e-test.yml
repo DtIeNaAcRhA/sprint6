@@ -1,0 +1,41 @@
+name: autotests
+
+on:
+  push:
+    branches: '**'
+  pull_request:
+    branches: '**'
+
+jobs:
+
+  firstfloortest:
+    runs-on: ubuntu-latest
+    container: golang:1.24
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download autotests binaries
+        uses: robinraju/release-downloader@v1.8
+        with:
+          repository: Yandex-Practicum/go-autotests
+          latest: true
+          fileName: "*"
+          out-file-path: .tools
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup autotest binary
+        run: |
+          chmod -R +x $GITHUB_WORKSPACE/.tools
+          mv $GITHUB_WORKSPACE/.tools/firstfloortest /usr/local/bin/firstfloortest
+
+      - name: Build server binary
+        run: |
+          cd cmd/
+          go build -buildvcs=false -o server
+
+      - name: Run test
+        run: |
+          firstfloortest -test.v -test.run=^TestSprint6Final$ \
+            -server-binary-path=cmd/server
