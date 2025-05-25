@@ -17,7 +17,8 @@ func HandleMain(w http.ResponseWriter, r *http.Request) {
 
 	file, err := os.ReadFile(mainName)
 	if err != nil {
-		http.Error(w, "Could not open file", http.StatusNoContent)
+
+		w.Write([]byte("No Content"))
 		return
 	}
 
