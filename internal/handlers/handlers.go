@@ -17,7 +17,7 @@ func HandleMain(w http.ResponseWriter, r *http.Request) {
 
 	file, err := os.ReadFile(mainName)
 	if err != nil {
-		http.Error(w, "Could not open file", http.StatusInternalServerError)
+		http.Error(w, "Could not open file", http.StatusNoContent)
 		return
 	}
 
