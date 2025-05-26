@@ -17,12 +17,12 @@ func HandleMain(w http.ResponseWriter, r *http.Request) {
 
 	file, err := os.ReadFile(mainName)
 	if err != nil {
-
+		w.Header().Set("Content-Type", "text/html")
 		w.Write([]byte("No Content"))
 		return
 	}
 
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.Header().Set("Content-Type", "text/html")
 	w.Write(file)
 }
 
@@ -69,8 +69,5 @@ func HandleUpload(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	fmt.Fprintf(w, "<p>Conversion successful!</p><p>Original filename: %s</p><p>Result saved to: %s</p><p>Converted data:%s</p>",
-		header.Filename,
-		outputFilename,
-		convertedData)
+	fmt.Fprintf(w, "%s", convertedData)
 }
