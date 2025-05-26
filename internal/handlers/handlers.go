@@ -22,7 +22,7 @@ func HandleMain(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.Write(file)
 }
 
@@ -53,7 +53,7 @@ func HandleUpload(w http.ResponseWriter, r *http.Request) {
 	}
 
 	outputFilename := fmt.Sprintf("result_%s%s",
-		time.Now().UTC().Format("2006_01_02_15_04"),
+		time.Now().UTC().Format("2006_01_02_15_04_05"),
 		filepath.Ext(header.Filename))
 
 	outputFile, err := os.Create(outputFilename)
