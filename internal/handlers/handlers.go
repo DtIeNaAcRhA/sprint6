@@ -69,7 +69,7 @@ func HandleUpload(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	fmt.Fprintf(w, "Conversion successful!\n\nOriginal filename: %s\nResult saved to: %s\n\nConverted data:\n%s",
+	fmt.Fprintf(w, "<p>Conversion successful!</p><p>Original filename: %s</p><p>Result saved to: %s</p><p>Converted data:%s</p>",
 		header.Filename,
 		outputFilename,
 		convertedData)
