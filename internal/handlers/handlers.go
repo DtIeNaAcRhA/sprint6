@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"time"
+	"log"
 
 	"github.com/Yandex-Practicum/go1fl-sprint6-final/internal/service"
 )
