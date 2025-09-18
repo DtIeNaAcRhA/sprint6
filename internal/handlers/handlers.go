@@ -15,6 +15,11 @@ const mainName = "../index.html"
 
 func HandleMain(w http.ResponseWriter, r *http.Request) {
 
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusBadRequest)
+		return
+	}
+
 	file, err := os.ReadFile(mainName)
 	if err != nil {
 		w.Header().Set("Content-Type", "text/html")
@@ -23,10 +28,19 @@ func HandleMain(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "text/html")
-	w.Write(file)
+	_, err = w.Write(file)
+	if err != nil {
+		log.Printf("error in writing answer to client: %v", err)
+		return
+	}
 }
 
 func HandleUpload(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusBadRequest)
+		return
+	}
 
 	if err := r.ParseMultipartForm(10 << 20); err != nil {
 		http.Error(w, "Error parsing form", http.StatusBadRequest)
